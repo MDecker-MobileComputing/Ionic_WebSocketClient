@@ -13,6 +13,13 @@ import { NavController } from '@ionic/angular';
 })
 export class Seite3Page  {
 
+  /** Name des Cookies mit Kanalname. */
+  readonly COOKIE_KEY_KANALNAME = "chat_kanalname";
+
+  /** Name des Cookies mit Nickname. */
+  readonly COOKIE_KEY_NICKNAME = "chat_nickname";
+
+
   /** Name des Chat-Kanals, mit Two-Way-Binding an <ion-input> gebunden. */
   public kanalname: string = "";
 
@@ -25,6 +32,25 @@ export class Seite3Page  {
    */
   constructor( private helferlein: HelferleinService,
                private navCtrl   : NavController ) { }                
+
+
+  /**
+   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde.
+   */  
+  ngOnInit() {
+
+    const kanalnameVonCookie = this.helferlein.leseCookie( this.COOKIE_KEY_KANALNAME );
+    if ( kanalnameVonCookie !== null ) {
+
+      this.kanalname = kanalnameVonCookie;
+    }
+    
+    const nicknameVonCookie = this.helferlein.leseCookie( this.COOKIE_KEY_NICKNAME );
+    if ( nicknameVonCookie !== null ) {
+
+      this.nickname = nicknameVonCookie;
+    }
+  }
 
 
   /**
@@ -47,6 +73,9 @@ export class Seite3Page  {
                                    "Nickname muss mindestens 3 Zeichen lang sein!" );
       return;
     } 
+
+    this.helferlein.setzeCookie( this.COOKIE_KEY_KANALNAME, kanalnameNorm );
+    this.helferlein.setzeCookie( this.COOKIE_KEY_NICKNAME , nicknameNorm  );
 
     const naviZiel = `/chatseite?kanalname=${kanalnameNorm}&nickname=${nicknameNorm}`;
     this.navCtrl.navigateForward( naviZiel );

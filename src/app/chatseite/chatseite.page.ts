@@ -50,7 +50,8 @@ export class ChatseitePage implements OnInit, OnDestroy {
 
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde.
+   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde;
+   * hier wird das Abonnement für den WebSocket/STOMP-Chat-Kanal eingerichtet.
    */  
   ngOnInit() {
 
@@ -119,6 +120,7 @@ export class ChatseitePage implements OnInit, OnDestroy {
         console.log( "Abonnement von STOMP-Topic für Chat beendet" );
     }    
   }
+
 
   /**
    * Event-Handler für Klick auf "Verlassen"-Button.

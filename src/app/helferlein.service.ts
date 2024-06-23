@@ -52,4 +52,52 @@ export class HelferleinService {
     toast.present();    
   }
 
+
+  /**
+   * Cookie auslesen.
+   * 
+   * @param name Name von Cookie
+   * 
+   * @returns Wert von Cookie mit `name` oder `null`, falls nicht vorhanden
+   */
+  public leseCookie( name: string ): string | null {
+
+    const nameEQ = name + "=";
+    const ca     = document.cookie.split( ";" );
+
+    for( let i=0; i < ca.length; i++ ) {
+
+        let c = ca[i];
+        while ( c.charAt(0)== ' ' ) {
+
+          c = c.substring( 1, c.length );
+        }
+
+        if ( c.indexOf( nameEQ ) == 0 ) {
+
+          return c.substring( nameEQ.length, c.length );
+        }
+    }
+
+    return null;
+  }  
+
+
+  /**
+   * Cookie setzen.
+   * 
+   * @param name Name des Cookies
+   * 
+   * @param werte Wert des Cookies
+   */
+  public setzeCookie( name: string, wert: string ) {
+
+    const MILLISEKUNDEN = 30 * 24 * 60 * 60 * 1000;
+    const jetztDate = new Date();
+    jetztDate.setTime( jetztDate.getTime() + MILLISEKUNDEN );
+    const expires = "; expires=" + jetztDate.toUTCString();
+    
+    document.cookie = name + "=" + ( wert || "" ) + expires + "; path=/";
+  }
+
 }
