@@ -2,9 +2,13 @@
 
 <br>
 
-WebSocket-Client mit Ionic für [dieses Backend](https://github.com/MDecker-MobileComputing/Maven_SpringBoot_WebSockets):
+WebSocket-Client mit Ionic für 
+[dieses mit *Spring Boot* implementierte Backend](https://github.com/MDecker-MobileComputing/Maven_SpringBoot_WebSockets):
+
 * Empfang von zufällig erzeugten Negativ-Schlagzeilen
+
 * Vokalersetzung
+
 * Multiuser-Chat
 
 <br>
