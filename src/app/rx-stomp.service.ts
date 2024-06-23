@@ -13,7 +13,9 @@ import { RxStomp } from '@stomp/rx-stomp';
 })
 export class RxStompService  {
 
+    /** RxStomp-Objekt für WebSocket/STOMP */
     public rxStomp: RxStomp;
+
 
     /**
      * RxStomp-Objekt erzeugen und konfigurieren
@@ -35,14 +37,6 @@ export class RxStompService  {
 
         this.rxStomp.activate();
         console.log( "STOMP-Client gestartet!" );
-
-        setTimeout(() => {
-            console.log("Versuche jetzt STOMP-Topic zu abonnieren...");
-            this.rxStomp
-                .watch({ destination: "/topic/schlagzeilen" })
-                .subscribe((message) => console.log(message.body));
-        }, 3000); // Verzögerung von 3000 Millisekunden (3 Sekunden)
-
     }
 
 }

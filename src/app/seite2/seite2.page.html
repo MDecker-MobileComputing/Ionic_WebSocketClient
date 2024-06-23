@@ -8,4 +8,43 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label position="fixed">Eingabe:</ion-label>
+      <ion-input type="text" 
+                [(ngModel)]="eingabeText" 
+                placeholder="Text für Vokalersetzung eingeben"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  &nbsp;
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="onUmwandelnButton('a')">A</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onUmwandelnButton('e')">E</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onUmwandelnButton('i')">I</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onUmwandelnButton('o')">O</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onUmwandelnButton('u')">U</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  &nbsp;
+
+  <ion-button expand="block" 
+              (click)="onZuruecksetzenButton()" >Zurücksetzen</ion-button>
+
 </ion-content>

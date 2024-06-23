@@ -28,19 +28,22 @@ export class HomePage implements OnInit, OnDestroy {
 
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde.
+   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde:
+   * STOMP-Topic abonnieren.
    */
   ngOnInit(): void {
 
-      this.abonnement = this.stompService.rxStomp
-                            .watch({ destination: "/topic/schlagzeilen" })
-                            .subscribe( (message) => this.nachrichtEmpfangen( message ) );
+      this.abonnement = 
+              this.stompService.rxStomp
+                               .watch({ destination: "/topic/schlagzeilen" })
+                               .subscribe( (message) => this.nachrichtEmpfangen( message ) );
       console.log( "STOMP-Topic abonniert!" );
   }
 
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite zerstört wird.
+   * Event-Handler wird aufgerufen, wenn die Seite zerstört wird:
+   * STOMP-Topic-Abonnement beenden.
    */
   ngOnDestroy(): void {
 
