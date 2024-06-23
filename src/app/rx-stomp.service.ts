@@ -23,7 +23,7 @@ export class RxStompService  {
 
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
-            brokerURL: "ws://websocket-backend-07e2f5daf03b.herokuapp.com/mein_ws",
+            brokerURL: "wss://websocket-backend-07e2f5daf03b.herokuapp.com/mein_ws",
             //brokerURL: "ws://localhost:8080/mein_ws",
             debug: (str) => console.debug( "STOMP DEBUG:", str ),
             reconnectDelay: 5000,
