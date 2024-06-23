@@ -3,6 +3,9 @@ import { HelferleinService } from '../helferlein.service';
 import { NavController } from '@ionic/angular';
 
 
+/**
+ * Seite für Eingabe von Chat-Kanal und Nickname.
+ */
 @Component({
   selector: 'app-seite3',
   templateUrl: './seite3.page.html',

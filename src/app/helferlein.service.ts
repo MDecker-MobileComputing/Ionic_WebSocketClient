@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 
 /**
@@ -13,16 +13,17 @@ export class HelferleinService {
   /**
    * Konstruktor für *Dependency Injection*.
    */
-  constructor( private alertCtrl: AlertController ) { }
+  constructor( private alertCtrl: AlertController,
+               private toastCtrl: ToastController ) { }   
 
 
   /**
-     * Hilfsmethode zum Anzeigen eines Dialogs.
-     * 
-     * @param titel Titel für Dialog
-     * 
-     * @param nachricht Text für Dialog
-     */
+   * Hilfsmethode zum Anzeigen eines Dialogs.
+   * 
+   * @param titel Titel für Dialog
+   * 
+   * @param nachricht Text für Dialog
+   */
   async zeigeDialog( titel: string, nachricht: string ) {
 
     const meinAlert =
@@ -33,6 +34,22 @@ export class HelferleinService {
           });
 
     await meinAlert.present();
-  }    
+  }
+  
+
+  /**
+   * Hilfsmethode zum Anzeigen eines Toasts.
+   * 
+   * @param nachricht Nachricht für Dialog
+   */
+  async zeigeToast( nachricht: string ) {
+
+    const toast = await this.toastCtrl.create({
+      message: nachricht,
+      duration: 2000
+    });
+
+    toast.present();    
+  }
 
 }

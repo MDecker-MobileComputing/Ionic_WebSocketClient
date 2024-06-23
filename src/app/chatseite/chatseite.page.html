@@ -6,6 +6,28 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-button expand="block" href="/seite3" routerDirection="backward">Zurück</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let beitrag of beitragArray">
+        <ion-label>
+          <span class="fett">{{ beitrag.nickname }}:</span> {{ beitrag.nachricht }} 
+        </ion-label>
+    </ion-item>
+  </ion-list>  
+
+  &nbsp;
+  
+  <ion-list>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="eingabeText" placeholder="Mein Beitrag ..."></ion-input>    
+      <ion-button expand="block" (click)="onBeitragSenden()">Absenden</ion-button>
+    </ion-item>
+  </ion-list>
+
+  &nbsp;
+
+  <ion-button expand="block" 
+              color="danger" 
+              href="/seite3" 
+              routerDirection="backward">Chat verlassen</ion-button>
 
 </ion-content>
