@@ -3,9 +3,10 @@ import { RxStomp } from '@stomp/rx-stomp';
 
 
 /**
- * https://www.npmjs.com/package/@stomp/rx-stomp
- * https://stomp-js.github.io/guide/rx-stomp/rx-stomp-with-angular.html
- * https://stomp-js.github.io/api-docs/latest/classes/RxStomp.html
+ * Doku zu RxStomp:
+ * * https://www.npmjs.com/package/@stomp/rx-stomp
+ * * https://stomp-js.github.io/guide/rx-stomp/rx-stomp-with-angular.html
+ * * https://stomp-js.github.io/api-docs/latest/classes/RxStomp.html
  */
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class RxStompService  {
 
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
-            brokerURL: "wss://websocket-backend-07e2f5daf03b.herokuapp.com/mein_ws",
-            //brokerURL: "ws://localhost:8080/mein_ws",
+            //brokerURL: "wss://websocket-backend-07e2f5daf03b.herokuapp.com/mein_ws",
+            brokerURL: "ws://localhost:8080/mein_ws",
             debug: (str) => console.debug( "STOMP DEBUG:", str ),
             reconnectDelay: 5000,
             heartbeatIncoming: 4000,
