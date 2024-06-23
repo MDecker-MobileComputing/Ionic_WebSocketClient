@@ -24,7 +24,7 @@ export class Seite3Page  {
    * Konstruktor für *Dependency Injection*.
    */
   constructor( private helferlein: HelferleinService,
-               private navCtrl  : NavController ) { }   
+               private navCtrl   : NavController ) { }                
 
 
   /**

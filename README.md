@@ -9,7 +9,7 @@ WebSocket-Client mit Ionic für
 
 * Vokalersetzung
 
-* Multiuser-Chat
+* Mehrnutzer-Chat
 
 <br>
 

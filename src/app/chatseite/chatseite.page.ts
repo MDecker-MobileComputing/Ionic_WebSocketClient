@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RxStompService } from '../rx-stomp.service';
 import { Subscription } from 'rxjs';
 import { HelferleinService } from '../helferlein.service';
+import { AlertController, NavController } from '@ionic/angular';
 
 
 /**
@@ -13,7 +14,7 @@ import { HelferleinService } from '../helferlein.service';
   templateUrl: './chatseite.page.html',
   styleUrls: ['./chatseite.page.scss'],
 })
-export class ChatseitePage implements OnInit {
+export class ChatseitePage implements OnInit, OnDestroy {
 
   /** Name Chat-Kanal, wird mit Interpolation auf UI angezeigt */
   public kanalname: string | null = "";
@@ -39,7 +40,9 @@ export class ChatseitePage implements OnInit {
    */
   constructor( private activatedRoute: ActivatedRoute,
                private stompService  : RxStompService,
-               private helferlein    : HelferleinService ) {   
+               private helferlein    : HelferleinService,
+               private alertCtrl     : AlertController,
+               private navCtrl       : NavController ) {   
 
     this.kanalname = activatedRoute.snapshot.queryParamMap.get( "kanalname" );
     this.nickname  = activatedRoute.snapshot.queryParamMap.get( "nickname"  );
@@ -116,5 +119,27 @@ export class ChatseitePage implements OnInit {
         console.log( "Abonnement von STOMP-Topic für Chat beendet" );
     }    
   }
+
+  /**
+   * Event-Handler für Klick auf "Verlassen"-Button.
+   * Nach positive Bestätigung wird die App beendet.
+   */
+  public async onVerlassen() {
+
+    const alert = await this.alertCtrl.create({
+      header: "Chat verlassen?",
+      message: "Möchten Sie den Chat wirklich verlassen?",
+      buttons: [
+        {
+          text: "Abbrechen",
+          role: "cancel"
+        }, {        
+          text: "Ja",
+          handler: () => { this.navCtrl.navigateBack( "/seite3" ); }                      
+        }]      
+    });
+
+    await alert.present();
+  }  
 
 }
