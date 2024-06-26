@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RxStompService } from '../rx-stomp.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { AlertController, NavController } from '@ionic/angular';
   templateUrl: './chatseite.page.html',
   styleUrls: ['./chatseite.page.scss'],
 })
-export class ChatseitePage implements OnInit, OnDestroy {
+export class ChatseitePage {
 
   /** Name Chat-Kanal, wird mit Interpolation auf UI angezeigt */
   public kanalname: string | null = "";
@@ -42,7 +42,7 @@ export class ChatseitePage implements OnInit, OnDestroy {
                private stompService  : RxStompService,
                private helferlein    : HelferleinService,
                private alertCtrl     : AlertController,
-               private navCtrl       : NavController ) {   
+               private navCtrl       : NavController ) {
 
     this.kanalname = activatedRoute.snapshot.queryParamMap.get( "kanalname" );
     this.nickname  = activatedRoute.snapshot.queryParamMap.get( "nickname"  );
@@ -52,23 +52,23 @@ export class ChatseitePage implements OnInit, OnDestroy {
   /**
    * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde;
    * hier wird das Abonnement für den WebSocket/STOMP-Chat-Kanal eingerichtet.
-   */  
-  ngOnInit() {
+   */
+  ionViewDidEnter() {
 
     this.subscribeTopic = `/topic/unterhaltung/${this.kanalname}`;
 
-    this.abonnement = 
+    this.abonnement =
           this.stompService.rxStomp
               .watch({ destination: this.subscribeTopic })
-              .subscribe( (message) => this.onNachrichtEmpfangen( message )  );    
-  }  
+              .subscribe( (message) => this.onNachrichtEmpfangen( message )  );
+  }
 
 
   /**
    * Event-Handler für über STOMP empfangene Chat-Nachricht.
-   * 
+   *
    * @param message Empfangene Nachricht
-   */  
+   */
   private onNachrichtEmpfangen( message: any ): void {
 
     const jsonPayload = message.body;
@@ -88,20 +88,20 @@ export class ChatseitePage implements OnInit, OnDestroy {
 
     const eingabeNorm = this.eingabeText.trim();
     if ( eingabeNorm.length === 0 ) {
-      
+
       this.helferlein.zeigeToast( "Leere Nachricht kann nicht als Beitrag versendet werden." );
       return;
     }
 
-    const payloadObj = { nickname : this.nickname,      
+    const payloadObj = { nickname : this.nickname,
                          nachricht: eingabeNorm };
-                       
+
     const payloadString = JSON.stringify( payloadObj );
 
-    this.stompService.rxStomp.publish({ destination: this.subscribeTopic, 
+    this.stompService.rxStomp.publish({ destination: this.subscribeTopic,
                                         body       : payloadString });
 
-    console.log( "Payload mit Beitrag verschickt: " + payloadString );    
+    console.log( "Payload mit Beitrag verschickt: " + payloadString );
 
     this.eingabeText = "";
   }
@@ -109,8 +109,8 @@ export class ChatseitePage implements OnInit, OnDestroy {
 
   /**
    * Event-Handler wird aufgerufen, wenn die Seite beendet wird.
-   */  
-  ngOnDestroy() {
+   */
+  ionViewWillLeave() {
 
     console.log( "Seite für Chat wird zerstört." );
 
@@ -118,7 +118,7 @@ export class ChatseitePage implements OnInit, OnDestroy {
 
         this.abonnement.unsubscribe();
         console.log( "Abonnement von STOMP-Topic für Chat beendet" );
-    }    
+    }
   }
 
 
@@ -135,13 +135,13 @@ export class ChatseitePage implements OnInit, OnDestroy {
         {
           text: "Abbrechen",
           role: "cancel"
-        }, {        
+        }, {
           text: "Ja",
-          handler: () => { this.navCtrl.navigateBack( "/seite3" ); }                      
-        }]      
+          handler: () => { this.navCtrl.navigateBack( "/seite3" ); }
+        }]
     });
 
     await alert.present();
-  }  
+  }
 
 }
