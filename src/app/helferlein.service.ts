@@ -93,7 +93,7 @@ export class HelferleinService {
   public setzeCookie( name: string, wert: string ) {
 
     const anzMillisekunden = 30 * 24 * 60 * 60 * 1000;
-    const jetztDate       = new Date();
+    const jetztDate        = new Date();
 
     jetztDate.setTime( jetztDate.getTime() + anzMillisekunden );
     const expires = "; expires=" + jetztDate.toUTCString();
