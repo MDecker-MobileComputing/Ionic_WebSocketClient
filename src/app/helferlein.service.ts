@@ -14,14 +14,14 @@ export class HelferleinService {
    * Konstruktor für *Dependency Injection*.
    */
   constructor( private alertCtrl: AlertController,
-               private toastCtrl: ToastController ) { }   
+               private toastCtrl: ToastController ) { }
 
 
   /**
    * Hilfsmethode zum Anzeigen eines Dialogs.
-   * 
+   *
    * @param titel Titel für Dialog
-   * 
+   *
    * @param nachricht Text für Dialog
    */
   async zeigeDialog( titel: string, nachricht: string ) {
@@ -35,11 +35,11 @@ export class HelferleinService {
 
     await meinAlert.present();
   }
-  
+
 
   /**
    * Hilfsmethode zum Anzeigen eines Toasts.
-   * 
+   *
    * @param nachricht Nachricht für Dialog
    */
   async zeigeToast( nachricht: string ) {
@@ -49,15 +49,15 @@ export class HelferleinService {
       duration: 2000
     });
 
-    toast.present();    
+    toast.present();
   }
 
 
   /**
    * Cookie auslesen.
-   * 
+   *
    * @param name Name von Cookie
-   * 
+   *
    * @returns Wert von Cookie mit `name` oder `null`, falls nicht vorhanden
    */
   public leseCookie( name: string ): string | null {
@@ -80,23 +80,24 @@ export class HelferleinService {
     }
 
     return null;
-  }  
+  }
 
 
   /**
    * Cookie setzen.
-   * 
+   *
    * @param name Name des Cookies
-   * 
+   *
    * @param werte Wert des Cookies
    */
   public setzeCookie( name: string, wert: string ) {
 
-    const MILLISEKUNDEN = 30 * 24 * 60 * 60 * 1000;
-    const jetztDate = new Date();
-    jetztDate.setTime( jetztDate.getTime() + MILLISEKUNDEN );
+    const anzMillisekunden = 30 * 24 * 60 * 60 * 1000;
+    const jetztDate       = new Date();
+
+    jetztDate.setTime( jetztDate.getTime() + anzMillisekunden );
     const expires = "; expires=" + jetztDate.toUTCString();
-    
+
     document.cookie = name + "=" + ( wert || "" ) + expires + "; path=/";
   }
 
