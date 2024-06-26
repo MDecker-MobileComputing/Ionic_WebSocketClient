@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage {
 
   /** Array mit den via WebSocket/STOMP empfangenen Schlagzeilen. */
   public schlagzeilenArray: string[] = [];
@@ -28,12 +28,11 @@ export class HomePage implements OnInit, OnDestroy {
 
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde:
-   * STOMP-Topic abonnieren.
+   * Event-Handler wird aufgerufen, wenn die Seite zur Anzeige gebracht wird.
    */
-  ngOnInit(): void {
+  ionViewDidEnter(): void {
 
-      this.abonnement = 
+      this.abonnement =
               this.stompService.rxStomp
                                .watch({ destination: "/topic/schlagzeilen" })
                                .subscribe( (message) => this.nachrichtEmpfangen( message ) );
@@ -45,19 +44,19 @@ export class HomePage implements OnInit, OnDestroy {
    * Event-Handler wird aufgerufen, wenn die Seite zerstört wird:
    * STOMP-Topic-Abonnement beenden.
    */
-  ngOnDestroy(): void {
+  ionViewWillLeave(): void {
 
       if ( this.abonnement ) {
 
         this.abonnement.unsubscribe();
         console.log( "Abonnement von STOMP-Topic beendet." );
       }
-  }  
+  }
 
 
   /**
    * Event-Handler für über STOMP empfangene Schlagzeile.
-   * 
+   *
    * @param message Empfangene Nachricht
    */
   private nachrichtEmpfangen( message: any ): void {
