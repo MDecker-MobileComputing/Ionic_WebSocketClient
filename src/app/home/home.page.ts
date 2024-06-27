@@ -30,7 +30,7 @@ export class HomePage {
   /**
    * Event-Handler wird aufgerufen, wenn die Seite zur Anzeige gebracht wird.
    */
-  ionViewDidEnter(): void {
+  ionViewDidEnter() {
 
       this.abonnement =
               this.stompService.rxStomp
@@ -44,7 +44,7 @@ export class HomePage {
    * Event-Handler wird aufgerufen, wenn die Seite zerstört wird:
    * STOMP-Topic-Abonnement beenden.
    */
-  ionViewWillLeave(): void {
+  ionViewWillLeave() {
 
       if ( this.abonnement ) {
 

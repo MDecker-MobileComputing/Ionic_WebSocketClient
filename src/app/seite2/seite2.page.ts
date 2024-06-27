@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RxStompService } from '../rx-stomp.service';
 import { Subscription } from 'rxjs';
 import { HelferleinService } from '../helferlein.service';
@@ -11,7 +11,7 @@ import { HelferleinService } from '../helferlein.service';
   templateUrl: './seite2.page.html',
   styleUrls: ['./seite2.page.scss'],
 })
-export class Seite2Page implements OnInit, OnDestroy {
+export class Seite2Page {
 
   /** Objekt mit Abonnement 1 von WebSocket/STOMP */
   private abonnementOutput: Subscription | null = null;
@@ -27,19 +27,19 @@ export class Seite2Page implements OnInit, OnDestroy {
    * Konstruktor für *Dependency Injection*.
    */
   constructor( private stompService: RxStompService,
-               private helferlein  : HelferleinService ) {}    
+               private helferlein  : HelferleinService ) {}
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde.
-   */  
-  ngOnInit() {
+   * Event-Handler wird aufgerufen, wenn die Seite angezeigt wird.
+   */
+  ionViewDidEnter() {
 
-      this.abonnementOutput = 
+      this.abonnementOutput =
               this.stompService.rxStomp
                                .watch({ destination: "/user/queue/vokalersetzungs_output" })
                                .subscribe( (message) => this.ergebnisEmpfangen( message )  );
 
-      this.abonnementFehler = 
+      this.abonnementFehler =
               this.stompService.rxStomp
                                .watch({ destination: "/user/queue/vokalersetzungs_fehler" })
                                .subscribe( (message) => this.fehlerEmpfangen( message ) );
@@ -50,9 +50,9 @@ export class Seite2Page implements OnInit, OnDestroy {
 
   /**
    * Event-Handler für über STOMP empfangenes Vokalersetzungsergebnis.
-   * 
+   *
    * @param message Empfangene Nachricht
-   */  
+   */
   private ergebnisEmpfangen( message: any ): void {
 
     this.helferlein.zeigeDialog( "Übersetzungsergebnis", message.body );
@@ -61,9 +61,9 @@ export class Seite2Page implements OnInit, OnDestroy {
 
   /**
    * Event-Handler für über STOMP empfangene Fehlermeldung.
-   * 
+   *
    * @param message Empfangene Nachricht
-   */  
+   */
   private fehlerEmpfangen( message: any ): void {
 
     this.helferlein.zeigeDialog( "Fehlermeldung", message.body );
@@ -71,10 +71,9 @@ export class Seite2Page implements OnInit, OnDestroy {
 
 
   /**
-   * Event-Handler wird aufgerufen, wenn die Seite zerstört wird:
-   * Die beiden STOMP-Topic-Abonnements beenden.
+   * Event-Handler wird aufgerufen, wenn die Seite verlassen wird.
    */
-  ngOnDestroy(): void {
+  ionViewWillLeave()  {
 
       console.log( "Seite für Vokalersetzung wird zerstört." );
 
@@ -88,7 +87,7 @@ export class Seite2Page implements OnInit, OnDestroy {
           this.abonnementFehler.unsubscribe();
           console.log( "Abonnement von STOMP-Topic \"Fehler\" beendet." );
       }
-  }    
+  }
 
 
   /**
@@ -99,16 +98,16 @@ export class Seite2Page implements OnInit, OnDestroy {
       const eingabe = this.eingabeText.trim();
       if ( eingabe.length === 0 ) {
 
-          this.helferlein.zeigeDialog( "Ungültige Eingabe", 
+          this.helferlein.zeigeDialog( "Ungültige Eingabe",
                                        "Bitte geben Sie einen Text ein!" );
           return;
       }
 
       const payloadObjekt = { text : this.eingabeText, vokal: zielvokal };
-                                    
+
       const payloadString = JSON.stringify( payloadObjekt );
 
-      this.stompService.rxStomp.publish({ destination: "/app/vokalersetzung_input", 
+      this.stompService.rxStomp.publish({ destination: "/app/vokalersetzung_input",
                                           body       : payloadString });
 
       console.log( "Nachricht gesendet: " + payloadString );
