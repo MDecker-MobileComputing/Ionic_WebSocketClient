@@ -10,6 +10,7 @@ import { NavController } from '@ionic/angular';
   selector: 'app-seite3',
   templateUrl: './seite3.page.html',
   styleUrls: ['./seite3.page.scss'],
+  standalone: false
 })
 export class Seite3Page  {
 
@@ -31,12 +32,12 @@ export class Seite3Page  {
    * Konstruktor für *Dependency Injection*.
    */
   constructor( private helferlein: HelferleinService,
-               private navCtrl   : NavController ) { }                
+               private navCtrl   : NavController ) { }
 
 
   /**
    * Event-Handler wird aufgerufen, wenn die Seite initialisiert wurde.
-   */  
+   */
   ngOnInit() {
 
     const kanalnameVonCookie = this.helferlein.leseCookie( this.COOKIE_KEY_KANALNAME );
@@ -44,7 +45,7 @@ export class Seite3Page  {
 
       this.kanalname = kanalnameVonCookie;
     }
-    
+
     const nicknameVonCookie = this.helferlein.leseCookie( this.COOKIE_KEY_NICKNAME );
     if ( nicknameVonCookie !== null ) {
 
@@ -63,16 +64,16 @@ export class Seite3Page  {
 
     if( kanalnameNorm.length < 3 ) {
 
-      this.helferlein.zeigeDialog( "Ungültige Eingabe", 
+      this.helferlein.zeigeDialog( "Ungültige Eingabe",
                                    "Kanalname muss mindestens 3 Zeichen lang sein!" );
       return;
     }
     if ( nicknameNorm.length < 3 ) {
 
-      this.helferlein.zeigeDialog( "Ungültige Eingabe", 
+      this.helferlein.zeigeDialog( "Ungültige Eingabe",
                                    "Nickname muss mindestens 3 Zeichen lang sein!" );
       return;
-    } 
+    }
 
     this.helferlein.setzeCookie( this.COOKIE_KEY_KANALNAME, kanalnameNorm );
     this.helferlein.setzeCookie( this.COOKIE_KEY_NICKNAME , nicknameNorm  );

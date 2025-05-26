@@ -13,6 +13,7 @@ import { AlertController, NavController } from '@ionic/angular';
   selector: 'app-chatseite',
   templateUrl: './chatseite.page.html',
   styleUrls: ['./chatseite.page.scss'],
+  standalone: false
 })
 export class ChatseitePage {
 

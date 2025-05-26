@@ -9,16 +9,16 @@
   <ion-list>
     <ion-item *ngFor="let beitrag of beitragArray">
         <ion-label>
-          <span class="fett">{{ beitrag.nickname }}:</span> {{ beitrag.nachricht }} 
+          <span class="fett">{{ beitrag.nickname }}:</span> {{ beitrag.nachricht }}
         </ion-label>
     </ion-item>
-  </ion-list>  
+  </ion-list>
 
   &nbsp;
-  
+
   <ion-list>
     <ion-item>
-      <ion-input type="text" [(ngModel)]="eingabeText" placeholder="Mein Beitrag ..."></ion-input>          
+      <ion-input type="text" [(ngModel)]="eingabeText" placeholder="Mein Beitrag ..."></ion-input>
     </ion-item>
   </ion-list>
 
@@ -26,6 +26,6 @@
 
   &nbsp;
 
-  <ion-button expand="block" color="danger" (click)="onVerlassen()">Chat verlassen</ion-button>              
+  <ion-button expand="block" color="danger" (click)="onVerlassen()">Chat verlassen</ion-button>
 
 </ion-content>

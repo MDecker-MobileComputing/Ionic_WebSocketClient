@@ -10,6 +10,7 @@ import { HelferleinService } from '../helferlein.service';
   selector: 'app-seite2',
   templateUrl: './seite2.page.html',
   styleUrls: ['./seite2.page.scss'],
+  standalone: false
 })
 export class Seite2Page {
 
