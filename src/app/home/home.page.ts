@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RxStompService } from '../rx-stomp.service';
 import { Subscription } from 'rxjs';
 
@@ -36,7 +36,7 @@ export class HomePage {
       this.abonnement =
               this.stompService.rxStomp
                                .watch({ destination: "/topic/schlagzeilen" })
-                               .subscribe( (message) => this.nachrichtEmpfangen( message ) );
+                               .subscribe( ( nachricht:any ) => this.nachrichtEmpfangen( nachricht ) );
       console.log( "STOMP-Topic abonniert!" );
   }
 
